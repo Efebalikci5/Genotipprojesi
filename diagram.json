@@ -1,0 +1,167 @@
+{
+  "version": 1,
+  "author": "Kilo",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-arduino-uno",
+      "id": "uno",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_anne_green",
+      "top": 100,
+      "left": 50,
+      "attrs": {
+        "color": "green"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_anne_yellow",
+      "top": 100,
+      "left": 100,
+      "attrs": {
+        "color": "yellow"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_anne_red",
+      "top": 100,
+      "left": 150,
+      "attrs": {
+        "color": "red"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_baba_green",
+      "top": 150,
+      "left": 50,
+      "attrs": {
+        "color": "green"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_baba_yellow",
+      "top": 150,
+      "left": 100,
+      "attrs": {
+        "color": "yellow"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_baba_red",
+      "top": 150,
+      "left": 150,
+      "attrs": {
+        "color": "red"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_cocuk1_green",
+      "top": 200,
+      "left": 50,
+      "attrs": {
+        "color": "green"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_cocuk1_yellow",
+      "top": 200,
+      "left": 100,
+      "attrs": {
+        "color": "yellow"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_cocuk1_red",
+      "top": 200,
+      "left": 150,
+      "attrs": {
+        "color": "red"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_cocuk2_green",
+      "top": 250,
+      "left": 50,
+      "attrs": {
+        "color": "green"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_cocuk2_yellow",
+      "top": 250,
+      "left": 100,
+      "attrs": {
+        "color": "yellow"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_cocuk2_red",
+      "top": 250,
+      "left": 150,
+      "attrs": {
+        "color": "red"
+      }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn_anne",
+      "top": 300,
+      "left": 50,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn_baba",
+      "top": 300,
+      "left": 150,
+      "attrs": {}
+    }
+  ],
+  "connections": [
+    ["uno:5", "led_anne_green:A"],
+    ["uno:6", "led_anne_yellow:A"],
+    ["uno:7", "led_anne_red:A"],
+    ["uno:8", "led_baba_green:A"],
+    ["uno:9", "led_baba_yellow:A"],
+    ["uno:10", "led_baba_red:A"],
+    ["uno:11", "led_cocuk1_green:A"],
+    ["uno:12", "led_cocuk1_yellow:A"],
+    ["uno:13", "led_cocuk1_red:A"],
+    ["uno:A0", "led_cocuk2_green:A"],
+    ["uno:A1", "led_cocuk2_yellow:A"],
+    ["uno:A2", "led_cocuk2_red:A"],
+    ["uno:GND.1", "led_anne_green:C"],
+    ["uno:GND.1", "led_anne_yellow:C"],
+    ["uno:GND.1", "led_anne_red:C"],
+    ["uno:GND.1", "led_baba_green:C"],
+    ["uno:GND.1", "led_baba_yellow:C"],
+    ["uno:GND.1", "led_baba_red:C"],
+    ["uno:GND.1", "led_cocuk1_green:C"],
+    ["uno:GND.1", "led_cocuk1_yellow:C"],
+    ["uno:GND.1", "led_cocuk1_red:C"],
+    ["uno:GND.1", "led_cocuk2_green:C"],
+    ["uno:GND.1", "led_cocuk2_yellow:C"],
+    ["uno:GND.1", "led_cocuk2_red:C"],
+    ["uno:2", "btn_anne:1"],
+    ["uno:3", "btn_baba:1"],
+    ["uno:GND.1", "btn_anne:2"],
+    ["uno:GND.1", "btn_baba:2"]
+  ]
+}</content>
+<parameter name="filePath">diagram.json
