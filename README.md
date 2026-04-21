@@ -40,7 +40,6 @@ Her birey icin 3 renkli bir LED grubu kullanilir:
 2. Crossover butonuna her basilinda:
    - Anne ve Baba'dan rastgele genler alinarak yeni cocuklar hesaplanir.
    - Sonuclar LED'lerde gosterilir.
-   - Serial Monitor'de genotip detaylari yazilir.
 3. Her butona basista farkli sonuc elde edilir (random secim).
 
 ## Teknik Detaylar
@@ -51,15 +50,6 @@ Her birey icin 3 renkli bir LED grubu kullanilir:
   - Anneden bir gen (A veya a) rastgele secilir.
   - Babadan bir gen (A veya a) rastgele secilir.
   - Cesitli kombinasyonlarla cocuklar olusturulur.
-
-## Serial Monitor Ciktisi
-
-Butona her basilinda:
-```
-Crossing completed!
-Child 1: Aa
-Child 2: AA
-```
 
 ## Olasiliklar
 
