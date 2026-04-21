@@ -23,11 +23,11 @@ Dirençler: LED'leri korumak için 220kΩ (simülasyonda görsel amaçlıdır, f
 
 GND: Tüm LED'lerin Katot (A) uçları ve butonların birer ucu Arduino'nun GND pinine bağlıdır.
 Çalışma Mantığı
-AA (Homozigot Baskın): Yeşil LED yanar.
+AA (Baskın): Yeşil LED yanar.
 
 Aa (Heterozigot): Sarı LED yanar.
 
-aa (Homozigot Çekinik): Kırmızı LED yanar.
+aa (Çekinik): Kırmızı LED yanar.
 Teknik Detaylar
 Random Seed: analogRead(A5) kullanılarak her açılışta farklı rastgele sonuçlar üretilmesi sağlanmıştır.
 
