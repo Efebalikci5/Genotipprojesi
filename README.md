@@ -1,10 +1,8 @@
-# Genotipprojesi
-
 ## Setup
 
 1. Wokwi.com adresine gidin ve yeni bir Arduino Uno projesi baslatin.
-2. diagram.json icerigini Wokwi'deki "diagram.json" sekmesine kopyalayin.
-3. genetik_simulator.ino kodunu ana kod sekmesine yapistirin.
+2. Proje klasöründeki en son diagram.json icerigini Wokwi'deki "diagram.json" sekmesine kopyalayin.
+3. Kod_24.04.ino kodunu ana kod sekmesine yapistirin.
 4. Simulasyonu baslatmak icin "Play" butonuna basin.
 
 ## Devre Baglantilari
@@ -18,7 +16,7 @@ Her birey icin 3 renkli bir LED grubu kullanilir:
 | Anne   | 5     | 6    | 7       |
 | Baba   | 8     | 9    | 10      |
 | Cocuk1 | 11    | 12   | 13      |
-| Cocuk2 | 14    | 15   | 16      |
+| Cocuk2 | 14(A0)|15(A1)|16(A2)   |
 
 **FenotipLED Iliskisi:**
 - Yesil LED: Homozigot Dominant (AA) - 2 baskın gen
@@ -27,7 +25,7 @@ Her birey icin 3 renkli bir LED grubu kullanilir:
 
 ### Buton
 
-- Pin 2: Crossover baslatma butonu ( INPUT_PULLUP )
+- Pin 2: Çaprazlama başlatma butonu (INPUT_PULLUP)
 
 ### Direncler
 
@@ -36,24 +34,20 @@ Her birey icin 3 renkli bir LED grubu kullanilir:
 
 ## Calisma Mantigi
 
-1. Sistem basladiginda Anne ve Baba "Aa" (heterozigot) olarak ayarlanir.
+1. Sistem basladiginda Anne ve Baba "Aa" (heterozigot) olarak ayarlanir ve LED'leri sarı yanar.
 2. Crossover butonuna her basilinda:
-   - Anne ve Baba'dan rastgele genler alinarak yeni cocuklar hesaplanir.
-   - Sonuclar LED'lerde gosterilir.
-3. Her butona basista farkli sonuc elde edilir (random secim).
+   - **Adım 1:** Anne ve Baba icin yeni genler rastgele hesaplanir ve LED'leri anında güncellenir.
+   - **Adım 2:** 1-1.5 saniye arasında rastgele bir sure beklenir.
+   - **Adım 3:** Çocuk 1 ve Çocuk 2 genotipleri hesaplanır ve LED'leri yakılır.
+3. LED'ler bir sonraki buton basinina kadar kalir (söndürülmez).
+4. Her butona bastırmada tum ailede farkli sonuclar elde edilir (random secim).
 
 ## Teknik Detaylar
 
 - **Random Seed:** analogRead(A5) kullanilarak her açilişta farkli rastgele sonuçlar üretilir.
 - **Debounce:** 200ms - buton tiklamasini önler.
+- **Bekleme suresi:** 1000-1500 ms arası rastgele.
 - **Genetik Kurallar:**
-  - Anneden bir gen (A veya a) rastgele secilir.
-  - Babadan bir gen (A veya a) rastgele secilir.
+  - Anne ve Baba hesaplanırken: her iki gen de rastgele 'A' veya 'a' olabilir.
+  - Çocuklar: Anneden ve Babadan rastgele secilen birer gen miras alir.
   - Cesitli kombinasyonlarla cocuklar olusturulur.
-
-## Olasiliklar
-
-Anne (Aa) x Baba (Aa) kesisiminde:
-- %25 AA (Yesil)
-- %50 Aa (Sari)
-- %25 aa (Kirmizi)
