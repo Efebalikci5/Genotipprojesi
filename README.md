@@ -1,53 +1,68 @@
-## Setup
+# Genetik Simülatör Projesi
 
-1. Wokwi.com adresine gidin ve yeni bir Arduino Uno projesi baslatin.
-2. Proje klasöründeki en son diagram.json icerigini Wokwi'deki "diagram.json" sekmesine kopyalayin.
-3. Kod_24.04.ino kodunu ana kod sekmesine yapistirin.
-4. Simulasyonu baslatmak icin "Play" butonuna basin.
+## Genel Bakış
+Bu proje, Arduino tabanlı bir genetik simülatör. Otosomal (normal) ve X-bağlı kalıtım modlarını destekler. Kullanıcı düğmelerle simülasyon çalıştırabilir ve mod değiştirebilir. LED'ler genotip ve cinsiyet durumunu gösterir.
 
-## Devre Baglantilari
+## Özellikler
+- **İki Mod**: Otosomal (AA/Aa/aa) ve X-linked (XA/Xa/Y).
+- **LED Gösterimi**: 4 kişi (Anne, Baba, Çocuk1, Çocuk2) için genotip LED'leri (Yeşil: AA/sağlıklı, Sarı: Aa/taşıyıcı, Kırmızı: aa/hasta).
+- **Cinsiyet LED'leri**: Sadece X-linked modda, Çocuk1 ve Çocuk2 için. Erkek sürekli yanar, kız yanıp söner (blink).
+- **Animasyon**: Mod değişikliğinde tüm LED'ler yanıp söner (non-blocking, 500ms aralıklarla).
+- **Debounce**: Düğmeler on-release trigger ile yanlış basışları önler.
+- **Rastgelelik**: randomSeed A0-A5 pinlerinden karmaşık değer alır.
 
-### LED'ler (Fenotip Gostergeleri)
+## Donanım Yapısı
+### Pinler
+- **LED Pinleri**:
+  - Anne: 5 (Yeşil), 6 (Sarı), 7 (Kırmızı)
+  - Baba: 11 (Yeşil), 12 (Sarı), 13 (Kırmızı)
+  - Çocuk1: 8 (Yeşil), 9 (Sarı), 10 (Kırmızı), 18 (Cinsiyet)
+  - Çocuk2: 14 (Yeşil), 15 (Sarı), 16 (Kırmızı), 19 (Cinsiyet)
+- **Düğme Pinleri**:
+  - Simülasyon: Pin 2 (INPUT_PULLUP)
+  - Mod Değiştirme: Pin 4 (INPUT_PULLUP)
+- **Analog Pinler**: A0-A5, randomSeed için.
 
-Her birey icin 3 renkli bir LED grubu kullanilir:
+### Bağlantı Şeması
+LED'ler dirençlerle bağlı (örneğin, Baba'nın dirençleri 11,12,13 pinlerine). Detaylar için JSON diyagramına bakın.
 
-| Kisi   | Yesil | Sari | Kirmizi |
-|--------|-------|------|---------|
-| Anne   | 5     | 6    | 7       |
-| Baba   | 8     | 9    | 10      |
-| Cocuk1 | 11    | 12   | 13      |
-| Cocuk2 | 14(A0)|15(A1)|16(A2)   |
+## Yazılım Yapısı
+### Ana Dosya: Kod_ortak_25.4.ino
+- **Struct Individual**: gene1, gene2, isMale.
+- **Global Değişkenler**:
+  - Mod: isXLinked
+  - Debounce: lastSimPress, lastModePress, simButtonWasPressed, modeButtonWasPressed
+  - Blink: lastBlink, blinkState
+  - Flash: flashing, flashTimes, currentFlash, lastFlashToggle, flashState
+- **Fonksiyonlar**:
+  - setup(): Serial, pinMode, randomSeed, başlangıç LED'ler.
+  - loop(): Düğme kontrolleri (on-release), blink/flash güncellemeleri.
+  - simulateGenetics(): Mod'a göre gen hesaplaması.
+  - updateLEDs(): LED güncellemeleri.
+  - printResults(): Seri çıktı.
+  - displayGenotype(): LED görselleştirme (X-linked erkekler için özel mantık).
+  - flashAllLEDs(): Flash başlatma (non-blocking).
 
-**FenotipLED Iliskisi:**
-- Yesil LED: Homozigot Dominant (AA) - 2 baskın gen
-- Sari LED: Heterozigot (Aa) - 1 baskın gen
-- Kirmizi LED: Homozigot Resesif (aa) - 0 baskın gen
+### Mod Mantığı
+- **Otosomal**: Rastgele genler, dominantCount'a göre LED.
+- **X-linked**: Anne XX, Baba XY, Çocuklar miras alır. Erkekler XA Y (sağlıklı) veya Xa Y (hasta), kadınlar XX kombinasyonları.
 
-### Buton
+## Kullanım
+1. Arduino'yu yükleyin.
+2. Seri monitörü açın (9600 baud).
+3. Simülasyon düğmesi (Pin 2): Genetik hesapla ve göster.
+4. Mod düğmesi (Pin 4): Otosomal ↔ X-linked değiştir, flash animasyonu.
+5. X-linked'de cinsiyet LED'leri blink/kalıcı yanar.
 
-- Pin 2: Çaprazlama başlatma butonu (INPUT_PULLUP)
+## Geliştirme Notları
+- Kod Arduino IDE ile derlenir.
+- Pin eşleşmeleri JSON diyagramıyla uyumlu.
+- Non-blocking animasyonlar millis() kullanır.
+- Güvenlik için on-release debounce.
 
-### Direncler
+## Gereksinimler
+- Arduino Uno (veya benzeri)
+- LED'ler, dirençler, düğmeler
+- Arduino IDE
 
-- LED onayi icin 220Ω - 330Ω (fiziksel devre)
-- Simülasyonda 220kΩ (görsel amaç)
-
-## Calisma Mantigi
-
-1. Sistem basladiginda Anne ve Baba "Aa" (heterozigot) olarak ayarlanir ve LED'leri sarı yanar.
-2. Crossover butonuna her basilinda:
-   - **Adım 1:** Anne ve Baba icin yeni genler rastgele hesaplanir ve LED'leri anında güncellenir.
-   - **Adım 2:** 1-1.5 saniye arasında rastgele bir sure beklenir.
-   - **Adım 3:** Çocuk 1 ve Çocuk 2 genotipleri hesaplanır ve LED'leri yakılır.
-3. LED'ler bir sonraki buton basinina kadar kalir (söndürülmez).
-4. Her butona bastırmada tum ailede farkli sonuclar elde edilir (random secim).
-
-## Teknik Detaylar
-
-- **Random Seed:** analogRead(A5) kullanilarak her açilişta farkli rastgele sonuçlar üretilir.
-- **Debounce:** 200ms - buton tiklamasini önler.
-- **Bekleme suresi:** 1000-1500 ms arası rastgele.
-- **Genetik Kurallar:**
-  - Anne ve Baba hesaplanırken: her iki gen de rastgele 'A' veya 'a' olabilir.
-  - Çocuklar: Anneden ve Babadan rastgele secilen birer gen miras alir.
-  - Cesitli kombinasyonlarla cocuklar olusturulur.
+Bu dokümantasyon projeyi anlamak için kullanılır.
