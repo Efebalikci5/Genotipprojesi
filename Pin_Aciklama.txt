@@ -1,0 +1,15 @@
+Pin Yerleri Açıklaması (Pin_Aciklama.txt dosyası içeriği):
+
+Arduino Uno için pin atamaları (0-19 arası). Çakışmayı önlemek için sıralı: Düğmeler INPUT_PULLUP, LED'ler OUTPUT. Analog A0-A5=14-19.
+
+- buttonPin (Simülasyon düğmesi): Pin 2, INPUT_PULLUP (basılı LOW, debounce 200ms).
+- modeButtonPin (Mod geçiş düğmesi): Pin 4, INPUT_PULLUP (basılı LOW, debounce 200ms).
+- ledPins[4][5] array:
+  - Anne (0): {5,6,7,-1} (genotip yeşil/sarı/kırmızı, cinsiyet yok).
+  - Baba (1): {8,9,10,-1} (genotip yeşil/sarı/kırmızı, cinsiyet yok).
+  - Çocuk 1 (2): {11,12,13,18} (genotip + cinsiyet LED).
+  - Çocuk 2 (3): {14,15,16,19} (genotip + cinsiyet LED).
+- randomSeed için: A5 (analog INPUT).
+- Kullanılmayan: 0,1,3,17 (RX/TX, LED'ler için ayrıldı).
+
+Toplam: 22 pin, Uno sınırlı, 3-16 ve 18-19 kullan.
